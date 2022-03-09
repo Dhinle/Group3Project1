@@ -24,4 +24,5 @@ public class Appliance {
 	public double getPrice() {
 		return price;
 	}
+	
 }
