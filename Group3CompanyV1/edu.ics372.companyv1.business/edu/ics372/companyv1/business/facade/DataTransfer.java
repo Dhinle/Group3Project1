@@ -11,7 +11,7 @@ public abstract class DataTransfer {
 	private double price;
 	private String customerName;
 	private String customerAddress;
-	private String customerPhone;
+	private long customerPhoneNumber;
 	private String customerId;
 	private double repairCost;
 	public double getRepairCost() {
@@ -74,12 +74,12 @@ public abstract class DataTransfer {
 		this.customerAddress = address;
 	}
 
-	public String getPhone() {
-		return customerPhone;
+	public long getPhone() {
+		return customerPhoneNumber;
 	}
 
-	public void setPhone(String phone) {
-		this.customerPhone = phone;
+	public void setPhone(long phone) {
+		this.customerPhoneNumber = phone;
 	}
 
 	public String getId() {
@@ -91,10 +91,10 @@ public abstract class DataTransfer {
 	}
 	//set all fields related with Customer using Customer parameter.
 	public void setCustomerFields(Customer customer) {
-		customerId = customer.getId();
+		customerId = customer.getCustomerID();
 		customerName = customer.getName();
 		customerAddress = customer.getAddress();
-		customerPhone = customer.getPhone();
+		customerPhoneNumber = customer.getPhoneNumber();
 	}
 	//set all fields related with Appliance using Appliance parameter.
 	public void setApplianceField(Appliance appliance) {

@@ -1,23 +1,25 @@
 package edu.ics372.companyv1.business.entities;
 
+
 public class ClothWasher extends Appliance{
 
-	private String id;
-	private double repairCost;
-
-	public ClothWasher(String brand, String model, double price) {
+	private double repairPlanCost;
+	private static final String WASHER_STRING = "CW";
+	
+	public ClothWasher(String brand, String model, double price, double repairPlanCost) {
 		super(brand, model, price);
-		// TODO Auto-generated constructor stub
-		this.applianceID = id;
+		this.repairPlanCost = repairPlanCost;
 	}
+
 
 	@Override
 	public void setApplianceID() {
-		// TODO Auto-generated method stub
-		this.applianceID = id;
+		super.applianceID = WASHER_STRING + IDserver.instance().getApplianceID(); 
 	}
-	
-	public void setRepairCost(double cost) {
-		this.repairCost = cost;
+
+
+	@Override
+	public String toString() {
+		return "Washer >> " + super.toString() + ", Repair Plan Cost: " + repairPlanCost;
 	}
 }

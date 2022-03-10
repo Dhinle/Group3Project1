@@ -3,10 +3,12 @@ package edu.ics372.companyv1interface;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import edu.ics372.companyv1.business.facade.Company;
 import edu.ics372.companyv1.business.facade.Request;
+import edu.ics372.companyv1.business.facade.Result;
 
 public class UserInterface {
 	private static Company company;
@@ -145,13 +147,25 @@ private void retrieve() {
 	private void addModel() {
 		// TODO Auto-generated method stub
 		do {
-			Request.instance().setType(getNumber("Choose type: 1 2 3 4"));
+			Request.instance().setType(getNumber("Choose type: 1: dryer 2: 3 4"));
 			Request.instance().setBrandName(getName("Enter Brand Name: "));
 			Request.instance().setModelName(getName("Enter Model Name"));
 			//different attribute
 		
 		}
 		while(yesOrNo("Add more appliance?"));
+		
+	}
+	
+	/**
+	 * Use case 12: List customer
+	 */
+	private void getCustomerList() {
+		Iterator<Result> iterator = company.listCustomer();
+		System.out.println("List of customer(name, address, phone, id)");
+		while(iterator.hasNext()) {
+			//not done yet
+		}
 		
 	}
 	/**
@@ -185,6 +199,7 @@ private void retrieve() {
 			case LIST_USER_IN_REPAIR_PLAN:
 				break;
 			case LIST_CUSTOMER:
+				getCustomerList();
 				break;
 			case LIST_BACKORER:
 				break;
@@ -198,6 +213,8 @@ private void retrieve() {
 
 	
 
+
+	
 
 	public static void main(String[] args) {
 		UserInterface.instance().progress();
