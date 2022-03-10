@@ -1,9 +1,12 @@
 package edu.ics372.companyv1interface;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 import edu.ics372.companyv1.business.facade.Company;
+import edu.ics372.companyv1.business.facade.Request;
 
 public class UserInterface {
 	private static Company company;
@@ -17,15 +20,42 @@ public class UserInterface {
 	private static final int FULLFILL_BACKORDER = 5;
 	private static final int ENROLL_REPAIR = 6;
 	private static final int WITHDRAW_REPAIR = 7;
-	private static final int PRINT_REVENUE = 8;
-	private static final int LIST_APPLIANCES = 9;
-	private static final int LIST_USER_IN_REPAIR_PLAN = 10;
-	private static final int LIST_CUSTOMER = 11;
-	private static final int LIST_BACKORER = 12;
-	private static final int SAVE = 13;
+	private static final int CHARGE_REPAIR_PLANS = 8;
+	private static final int PRINT_REVENUE = 9;
+	private static final int LIST_APPLIANCES = 10;
+	private static final int LIST_USER_IN_REPAIR_PLAN = 11;
+	private static final int LIST_CUSTOMER = 12;
+	private static final int LIST_BACKORER = 13;
+	private static final int SAVE = 14;
+	private static final int HELP =15;
 	
 	
-	
+	private UserInterface() {
+		if (yesOrNo("Look for saved data and  use it?")) {
+			retrieve();
+		} else {
+			company = Company.instance();
+		}
+
+	}
+
+private void retrieve() {
+	try {
+		if (company == null) {
+			company = company.retrieve();
+			if (company != null) {
+				System.out.println(" The Company has been successfully retrieved from the file LibraryData \n");
+			} else {
+				System.out.println("File doesnt exist; creating new library");
+				company = company.instance();
+			}
+		}
+	} catch (Exception cnfe) {
+		cnfe.printStackTrace();
+	}
+		
+	}
+
 /**
  * Singleton pattern
  * @return the singleton object
@@ -38,18 +68,94 @@ public class UserInterface {
 		}
 	}
 	
+	public String getToken(String prompt) {
+		do {
+			try {
+				System.out.println(prompt);
+				String line = reader.readLine();
+				StringTokenizer tokenizer = new StringTokenizer(line, "\n\r\f");
+				if (tokenizer.hasMoreTokens()) {
+					return tokenizer.nextToken();
+				}
+			} catch (IOException ioe) {
+				System.exit(0);
+			}
+		} while (true);
+	}
 
+	
+	/**
+	 * get a name from actor
+	 * @return 
+	 */
+	public String getName(String prompt) {
+		do {
+			try {
+				//ask user input
+				System.out.println(prompt);
+				String line = reader.readLine();
+				return line;
+			}
+			catch(IOException ioe) {
+				System.exit(0);
+			}
+		}while(true);
+	}
+	
+	public int getNumber(String prompt) {
+		do {
+			try {
+				String item = getToken(prompt);
+				Integer number = Integer.valueOf(item);
+				return number.intValue();
+			} catch (NumberFormatException nfe) {
+				System.out.println("Please input a number ");
+			}
+		} while (true);
+	}
+	
+	
+	private boolean yesOrNo(String prompt) {
+		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
+		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
+			return false;
+		}
+		return true;
+	}
 	private int getCommand() {
-		// TODO Auto-generated method stub
-		return 0;
+		do {
+			try {
+				int value = Integer.parseInt(getToken("Enter command:" + HELP + " for help"));
+				if (value >= EXIT && value <= HELP) {
+					return value;
+				}
+			} catch (NumberFormatException nfe) {
+				System.out.println("Enter a number");
+			}
+		} while (true);
 	}
 
 	private void help() {
-		// TODO Auto-generated method stub
+		System.out.println(ADD_MODEL +" to add a single model");
 		
 	}
 	/**
-	 * call appropriate method for the funstionalities
+	 * use case 1 : add single model
+	 */
+	private void addModel() {
+		// TODO Auto-generated method stub
+		do {
+			Request.instance().setType(getNumber("Choose type: 1 2 3 4"));
+			Request.instance().setBrandName(getName("Enter Brand Name: "));
+			Request.instance().setModelName(getName("Enter Model Name"));
+			//different attribute
+		
+		}
+		while(yesOrNo("Add more appliance?"));
+		
+	}
+	/**
+	 * call appropriate method for the functionalities
 	 * @param args
 	 */
 	public void progress() {
@@ -58,6 +164,7 @@ public class UserInterface {
 		while((command = getCommand()) != EXIT) {
 			switch(command) {
 			case ADD_MODEL:
+				addModel();
 				break;
 			case ADD_CUSTOMER:
 				break;
@@ -83,13 +190,17 @@ public class UserInterface {
 				break;
 			case SAVE:
 				break;
+			case HELP:
+				break;
 			}
 		}
 	}
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 
+
+	public static void main(String[] args) {
+		UserInterface.instance().progress();
 	}
 
 }

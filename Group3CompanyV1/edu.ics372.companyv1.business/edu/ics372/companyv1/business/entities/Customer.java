@@ -1,5 +1,7 @@
 package edu.ics372.companyv1.business.entities;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,5 +47,10 @@ public class Customer {
 	
 	public String getId() {
 		return id;
+	}
+
+	public static void retrieve(ObjectInputStream input) throws ClassNotFoundException, IOException {
+		idCounter = (int) input.readObject();
+		
 	}
 }
