@@ -139,7 +139,9 @@ private void retrieve() {
 
 	private void help() {
 		System.out.println(ADD_MODEL +" to add a single model");
-		System.out.println(LIST_CUSTOMER+ "to list all customers");
+		System.out.println(ADD_CUSTOMER + " to add a customer");
+		System.out.println(LIST_CUSTOMER+ " to list all customers");
+		
 	}
 	/**
 	 * use case 1 : add single model
@@ -156,7 +158,23 @@ private void retrieve() {
 		while(yesOrNo("Add more appliance?"));
 		
 	}
-	
+	/**
+	 * use case 2: add Customer
+	 */
+	private void addCustomer() {
+
+		Request.instance().setName(getName("Enter the name of the customer"));
+		Request.instance().setAddress(getName("Enter the address of the customer"));
+		Request.instance().setPhone(getName("Enter the phone number of the customer"));
+		Result result = company.addCustomer(Request.instance());
+		if (result.getResutInt() == Result.OPERATION_COMPLETED) {
+			System.out.println(result.getName() + "'s id is " + result.getId());
+
+		} else {
+			System.out.println("System is unable to add the customer");
+		}
+
+	}
 	/**
 	 * Use case 12: List customer
 	 */
@@ -171,6 +189,18 @@ private void retrieve() {
 		System.out.println("End of the cutomer list");
 	}
 	/**
+	 * Use case 15 : Save
+	 */
+	private void save() {
+		if(company.save()) {
+			System.out.println("Saved");
+		}
+		else {
+			System.out.println("Save Error");
+		}
+		
+	}
+	/**
 	 * call appropriate method for the functionalities
 	 * @param args
 	 */
@@ -183,6 +213,7 @@ private void retrieve() {
 				addModel();
 				break;
 			case ADD_CUSTOMER:
+				addCustomer();
 				break;
 			case ADD_INVENTORY:
 				break;
@@ -206,6 +237,7 @@ private void retrieve() {
 			case LIST_BACKORER:
 				break;
 			case SAVE:
+				save();
 				break;
 			case HELP:
 				break;
@@ -215,6 +247,8 @@ private void retrieve() {
 
 	
 
+
+	
 
 	
 

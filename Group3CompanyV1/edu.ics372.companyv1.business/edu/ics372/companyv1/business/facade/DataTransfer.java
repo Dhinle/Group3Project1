@@ -11,7 +11,7 @@ public abstract class DataTransfer {
 	private double price;
 	private String customerName;
 	private String customerAddress;
-	private long customerPhoneNumber;
+	private String customerPhoneNumber;
 	private String customerId;
 	private double repairCost;
 	public double getRepairCost() {
@@ -74,11 +74,11 @@ public abstract class DataTransfer {
 		this.customerAddress = address;
 	}
 
-	public long getPhone() {
+	public String getPhone() {
 		return customerPhoneNumber;
 	}
 
-	public void setPhone(long phone) {
+	public void setPhone(String phone) {
 		this.customerPhoneNumber = phone;
 	}
 

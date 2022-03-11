@@ -54,10 +54,14 @@ public class CustomerList implements Iterable<Customer> {
 		return false;
 	}
 	
+	public int size() {
+		return customers.size();
+	}
+	
 	@Override
-	public Iterator iterator() {
+	public Iterator<Customer> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return customers.iterator();
 	}
 
 }
