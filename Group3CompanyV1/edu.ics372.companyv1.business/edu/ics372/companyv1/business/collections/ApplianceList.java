@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import edu.ics372.companyv1.business.entities.Appliance;
+import edu.ics372.companyv1.business.entities.Customer;
 
 public class ApplianceList implements Iterable<Appliance>{
 	private List<Appliance> appliances = new LinkedList<Appliance>();
@@ -44,10 +45,8 @@ public class ApplianceList implements Iterable<Appliance>{
 		return null;
 	}
 	
-	public void displayAppliance() {
-		for(int i = 0; i < appliances.size(); i++) {
-			System.out.println(appliances.get(i).toString());
-		}
+	public Iterator<Appliance> displayCustomer() {
+		return appliances.iterator();
 	}
 	
 	public void displayAppliance(String type) {

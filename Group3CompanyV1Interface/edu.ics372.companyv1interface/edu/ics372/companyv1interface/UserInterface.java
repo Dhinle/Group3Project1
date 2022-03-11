@@ -139,7 +139,7 @@ private void retrieve() {
 
 	private void help() {
 		System.out.println(ADD_MODEL +" to add a single model");
-		
+		System.out.println(LIST_CUSTOMER+ "to list all customers");
 	}
 	/**
 	 * use case 1 : add single model
@@ -164,9 +164,11 @@ private void retrieve() {
 		Iterator<Result> iterator = company.listCustomer();
 		System.out.println("List of customer(name, address, phone, id)");
 		while(iterator.hasNext()) {
-			//not done yet
+			Result result = iterator.next();
+			System.out.println(result.getId()+" "+result.getName()+" "+ result.getAddress()
+			+ " "+ result.getPhone());
 		}
-		
+		System.out.println("End of the cutomer list");
 	}
 	/**
 	 * call appropriate method for the functionalities

@@ -1,5 +1,8 @@
 package GroupProject1;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Customer {
 	private String customerID;
 	private String name;
@@ -7,7 +10,8 @@ public class Customer {
 	private long phoneNumber;
 	private boolean hasRepairPlan;
 	private static final String CUSTOMER_STRING = "CU";
-
+	private List<RepairPlan> repairPlans = new LinkedList<RepairPlan>();
+	private double amountDue;
 	public Customer(String name, String address, long phoneNumber) {
 		this.name = name;
 		this.address = address;
@@ -47,5 +51,11 @@ public class Customer {
 		return "Customer ID: " + customerID + ", Name: " + name + ", Address: " + address + ", Phone Number: "
 				+ phoneNumber + ", Has Repair Plan: " + hasRepairPlan;
 	}
-
+	 public void chargeRepairPlan() {
+	        if (isHasRepairPlan()) {
+	            for (int i = 0; i < repairPlans.size(); i++) {
+	                amountDue = repairPlans.get(i).getRepairCost(); // getRepairCost() not yet implemented
+	            }
+	        }
+	    }
 }

@@ -16,6 +16,7 @@ import edu.ics372.companyv1.business.entities.DishWashers;
 import edu.ics372.companyv1.business.entities.Furnaces;
 import edu.ics372.companyv1.business.entities.KitchenRanges;
 import edu.ics372.companyv1.business.entities.Refrigerators;
+import edu.ics372.companyv1.business.iterators.SafeApplianceIterator;
 import edu.ics372.companyv1.business.iterators.SafeCustomerIterator;
 
 public class Company implements Serializable{
@@ -64,8 +65,8 @@ public class Company implements Serializable{
 		app.increaseStock(quantity);
 	}
 
-	public void listAppliance() {
-		applianceList.displayAppliance();
+	public Iterator<Result> listAppliance() {
+		return new SafeApplianceIterator(applianceList.displayCustomer());
 	}
 
 	public void listAppliance(String type) {
