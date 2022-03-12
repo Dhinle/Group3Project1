@@ -27,11 +27,10 @@ public class UserInterface {
 	private static final int LIST_APPLIANCES = 10;
 	private static final int LIST_USER_IN_REPAIR_PLAN = 11;
 	private static final int LIST_CUSTOMER = 12;
-	private static final int LIST_BACKORER = 13;
+	private static final int LIST_BACKODRER = 13;
 	private static final int SAVE = 14;
-	private static final int HELP =15;
-	
-	
+	private static final int HELP = 15;
+
 	private UserInterface() {
 		if (yesOrNo("Look for saved data and  use it?")) {
 			retrieve();
@@ -41,35 +40,36 @@ public class UserInterface {
 
 	}
 
-private void retrieve() {
-	try {
-		if (company == null) {
-			company = company.retrieve();
-			if (company != null) {
-				System.out.println(" The Company has been successfully retrieved from the file LibraryData \n");
-			} else {
-				System.out.println("File doesnt exist; creating new library");
-				company = company.instance();
+	private void retrieve() {
+		try {
+			if (company == null) {
+				company = company.retrieve();
+				if (company != null) {
+					System.out.println(" The Company has been successfully retrieved from the file LibraryData \n");
+				} else {
+					System.out.println("File doesnt exist; creating new library");
+					company = company.instance();
+				}
 			}
+		} catch (Exception cnfe) {
+			cnfe.printStackTrace();
 		}
-	} catch (Exception cnfe) {
-		cnfe.printStackTrace();
-	}
-		
+
 	}
 
-/**
- * Singleton pattern
- * @return the singleton object
- */
+	/**
+	 * Singleton pattern
+	 * 
+	 * @return the singleton object
+	 */
 	public static UserInterface instance() {
-		if(userInterface == null) {
+		if (userInterface == null) {
 			return userInterface = new UserInterface();
-		}else {
+		} else {
 			return userInterface;
 		}
 	}
-	
+
 	public String getToken(String prompt) {
 		do {
 			try {
@@ -85,25 +85,24 @@ private void retrieve() {
 		} while (true);
 	}
 
-	
 	/**
 	 * get a name from actor
-	 * @return 
+	 * 
+	 * @return
 	 */
 	public String getName(String prompt) {
 		do {
 			try {
-				//ask user input
+				// ask user input
 				System.out.println(prompt);
 				String line = reader.readLine();
 				return line;
-			}
-			catch(IOException ioe) {
+			} catch (IOException ioe) {
 				System.exit(0);
 			}
-		}while(true);
+		} while (true);
 	}
-	
+
 	public int getNumber(String prompt) {
 		do {
 			try {
@@ -115,8 +114,7 @@ private void retrieve() {
 			}
 		} while (true);
 	}
-	
-	
+
 	private boolean yesOrNo(String prompt) {
 		String more = getToken(prompt + " (Y|y)[es] or anything else for no");
 		if (more.charAt(0) != 'y' && more.charAt(0) != 'Y') {
@@ -124,6 +122,7 @@ private void retrieve() {
 		}
 		return true;
 	}
+
 	private int getCommand() {
 		do {
 			try {
@@ -138,11 +137,24 @@ private void retrieve() {
 	}
 
 	private void help() {
-		System.out.println(ADD_MODEL +" to add a single model");
+		System.out.println(ADD_MODEL + " to add a single model");
 		System.out.println(ADD_CUSTOMER + " to add a customer");
-		System.out.println(LIST_CUSTOMER+ " to list all customers");
-		
+		System.out.println(ADD_INVENTORY + " to add a single to inventory");
+		System.out.println(PURCHASE_FOR_A_CUSTOMER + " to make a order for a customer");
+		System.out.println(FULLFILL_BACKORDER + " to full fill a single backorder");
+		System.out.println(ENROLL_REPAIR + " to enroll a customer in a repair plan for a single appliance");
+		System.out.println(WITHDRAW_REPAIR + " to withdraw customer from a repair plan");
+		System.out.println(CHARGE_REPAIR_PLANS + " to charge all repair plan");
+		System.out.println(PRINT_REVENUE + " to print revenue from all sales and repair plan");
+		System.out.println(LIST_APPLIANCES + " to list all or some types of appliances");
+		System.out.println(LIST_USER_IN_REPAIR_PLAN + " to list al users in repair plan");
+		System.out.println(LIST_CUSTOMER + " to list all customers");
+		System.out.println(LIST_BACKODRER + " to list all backorder");
+		System.out.println(SAVE + " to save data");
+		System.out.println(HELP + " for help");
+
 	}
+
 	/**
 	 * use case 1 : add single model
 	 */
@@ -152,12 +164,12 @@ private void retrieve() {
 			Request.instance().setType(getNumber("Choose type: 1: dryer 2: 3 4"));
 			Request.instance().setBrandName(getName("Enter Brand Name: "));
 			Request.instance().setModelName(getName("Enter Model Name"));
-			//different attribute
-		
-		}
-		while(yesOrNo("Add more appliance?"));
-		
+			// different attribute
+
+		} while (yesOrNo("Add more appliance?"));
+
 	}
+
 	/**
 	 * use case 2: add Customer
 	 */
@@ -175,40 +187,54 @@ private void retrieve() {
 		}
 
 	}
+	private void listAppliances() {
+		do {
+			Request.instance().setAppliancesToDisplay(getNumber("Choose appliance to display:0: all appliance 1:Cloth Dryer  2:Furnace 3:Refrigerator  4:Kitchen Range   "
+					+ "5:Cloth Washer  6:Dish Washer"));
+	 company.listAppliance(Request.instance());
+		if(!yesOrNo("More list")) {
+			break;
+		}
+		}while(true);
+		
+	}
+
 	/**
 	 * Use case 12: List customer
 	 */
 	private void getCustomerList() {
 		Iterator<Result> iterator = company.listCustomer();
 		System.out.println("List of customer(name, address, phone, id)");
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Result result = iterator.next();
-			System.out.println(result.getId()+" "+result.getName()+" "+ result.getAddress()
-			+ " "+ result.getPhone());
+			System.out.println(
+					result.getId() + " " + result.getName() + " " + result.getAddress() + " " + result.getPhone());
 		}
 		System.out.println("End of the cutomer list");
 	}
+
 	/**
 	 * Use case 15 : Save
 	 */
 	private void save() {
-		if(company.save()) {
+		if (company.save()) {
 			System.out.println("Saved");
-		}
-		else {
+		} else {
 			System.out.println("Save Error");
 		}
-		
+
 	}
+
 	/**
 	 * call appropriate method for the functionalities
+	 * 
 	 * @param args
 	 */
 	public void progress() {
 		int command;
 		help();
-		while((command = getCommand()) != EXIT) {
-			switch(command) {
+		while ((command = getCommand()) != EXIT) {
+			switch (command) {
 			case ADD_MODEL:
 				addModel();
 				break;
@@ -228,13 +254,14 @@ private void retrieve() {
 			case PRINT_REVENUE:
 				break;
 			case LIST_APPLIANCES:
+				listAppliances();
 				break;
 			case LIST_USER_IN_REPAIR_PLAN:
 				break;
 			case LIST_CUSTOMER:
 				getCustomerList();
 				break;
-			case LIST_BACKORER:
+			case LIST_BACKODRER:
 				break;
 			case SAVE:
 				save();
@@ -244,13 +271,6 @@ private void retrieve() {
 			}
 		}
 	}
-
-	
-
-
-	
-
-	
 
 	public static void main(String[] args) {
 		UserInterface.instance().progress();

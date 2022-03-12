@@ -20,4 +20,6 @@ public class Request extends DataTransfer {
 	public void setType(int applianceType) {
 		this.applianceType = applianceType;
 	}
+
+	
 }

@@ -53,7 +53,7 @@ public class Driver {
 		listLineItem.add(lt3);
 		Order order1 = new RegularOrder(cust1, listLineItem);
 		System.out.println(order1.toString());
-		
+		company.listAppliance("washer");
 	}
 
 }

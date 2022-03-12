@@ -20,7 +20,7 @@ public class Company {
 			return (company = new Company());
 		}
 		return company;
-	}
+	} 
 
 	public Appliance addWasher(String brand, String model, double price, double repairPlanCost) {
 		Appliance washer = new Washer(brand, model, price, repairPlanCost);

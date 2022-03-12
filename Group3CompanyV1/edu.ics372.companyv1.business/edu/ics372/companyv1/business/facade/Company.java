@@ -15,10 +15,8 @@ import edu.ics372.companyv1.business.entities.Appliance;
 import edu.ics372.companyv1.business.entities.ClothDryer;
 import edu.ics372.companyv1.business.entities.ClothWasher;
 import edu.ics372.companyv1.business.entities.Customer;
-import edu.ics372.companyv1.business.entities.DishWashers;
-import edu.ics372.companyv1.business.entities.Furnaces;
-import edu.ics372.companyv1.business.entities.KitchenRanges;
-import edu.ics372.companyv1.business.entities.Refrigerators;
+import edu.ics372.companyv1.business.entities.DishWasher;
+import edu.ics372.companyv1.business.entities.Furnace;
 import edu.ics372.companyv1.business.iterators.SafeApplianceIterator;
 import edu.ics372.companyv1.business.iterators.SafeCustomerIterator;
 
@@ -46,12 +44,11 @@ public class Company implements Serializable {
 			ClothDryer dryer = new ClothDryer(request.getBrandName(), request.getModelName(), request.getPrice(),
 					request.getRepairCost());
 		} else if (request.getType() == 2) {
-			ClothWasher clothWasher = new ClothWasher(request.getBrandName(), request.getModelName(),
-					request.getPrice());
+			ClothWasher clothWasher = new ClothWasher(request.getBrandName(), request.getModelName(),request.getPrice());
 		}
 
-		DishWashers dishWasher = new DishWashers(request.getBrandName(), request.getModelName(), request.getPrice());
-		Furnaces furnace = new Furnaces(request.getBrandName(), request.getModelName(), request.getPrice());
+		DishWasher dishWasher = new DishWasher(request.getBrandName(), request.getModelName(), request.getPrice());
+		Furnace furnace = new Furnace(request.getBrandName(), request.getModelName(), request.getPrice());
 		KitchenRanges kitchenRange = new KitchenRanges(request.getBrandName(), request.getModelName(),
 				request.getPrice());
 		Refrigerators refrigerator = new Refrigerators(request.getBrandName(), request.getModelName(),
@@ -77,14 +74,43 @@ public class Company implements Serializable {
 		app.increaseStock(quantity);
 	}
 
+	//list all appliance
 	public Iterator<Result> listAppliance() {
 		return new SafeApplianceIterator(applianceList.displayCustomer());
 	}
-
+	
+	//list specific type of appliance
 	public void listAppliance(String type) {
 		applianceList.displayAppliance(type);
 	}
-
+	
+	public void listAppliance(Request type) {
+		Result result = new Result();
+		if(type.getType() == 0) {
+			this.listAppliance();
+		}
+		if(type.getType() == 1) {
+			 applianceList.displayAppliance("ClothDryer");
+		}
+		else if (type.getType() == 2) {
+			applianceList.displayAppliance("ClothWasher");
+		}
+		else if (type.getType() == 3) {
+			applianceList.displayAppliance("KitchenRange");
+		}
+		else if (type.getType() == 4) {
+			applianceList.displayAppliance("DishWasher");
+		}
+		else if (type.getType() == 5) {
+			applianceList.displayAppliance("Furnace");
+		}
+		else if( type.getType() ==6) {
+			applianceList.displayAppliance("Refrigerator");
+		}
+		else {
+			System.out.println("Please enter number above ");
+		}
+	}
 	public Iterator<Result> listCustomer() {
 		return new SafeCustomerIterator(customerList.displayCustomer());
 	}

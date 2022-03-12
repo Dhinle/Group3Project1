@@ -45,14 +45,12 @@ public class Customer {
 	
 	public void setCustomerID() {
 		customerID = CUSTOMER_STRING + IDserver.instance().getCustomerID();
-		//DOUBLE CHECK WITH THIS !!!
-		id = Integer.parseInt(customerID);
 	}
 	
 	public void setHasRepairPlan(boolean hasRepairPlan) {
 		this.hasRepairPlan = hasRepairPlan;
 	}
-	
+	/**
 	public boolean issueRepairPlan(Appliance appliance) {
         if (appliance.instanceOf(Dryer) || appliance.instanceOf(Washer)) {
             if (repairPlans.add(appliance)) {
@@ -62,7 +60,8 @@ public class Customer {
             return false;
         }
     }
-	
+	*/
+	/**
 	public void chargeRepairPlan() {
         if (isHasRepairPlan()) {
             for (int i = 0; i < repairPlans.size(); i++) {
@@ -70,7 +69,7 @@ public class Customer {
             }
         }
     }
-
+*/
 	public String toString() {
 		return "Customer ID: " + customerID + ", Name: " + name + ", Address: " + address + ", Phone Number: "
 				+ phoneNumber + ", Has Repair Plan: " + hasRepairPlan;

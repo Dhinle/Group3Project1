@@ -1,5 +1,8 @@
 package edu.ics372.companyv1.business.facade;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import edu.ics372.companyv1.business.entities.Appliance;
 import edu.ics372.companyv1.business.entities.Customer;
 
@@ -14,6 +17,7 @@ public abstract class DataTransfer {
 	private String customerPhoneNumber;
 	private String customerId;
 	private double repairCost;
+	private HashSet<Integer> choosenAppliances;
 	public double getRepairCost() {
 		return repairCost;
 	}
@@ -103,6 +107,15 @@ public abstract class DataTransfer {
 		modelName = appliance.getModelName();
 		price = appliance.getPrice();
 	}
+	
+	public void setAppliancesToDisplay(int applianceType) {
+        choosenAppliances = new HashSet<Integer>();
+        choosenAppliances.add(applianceType);
+	}
+	 public Set<Integer> getChoosenAppliances() {
+	        return choosenAppliances;
+	    }
+
 	//set all fields to none
 	public void reset(){
 		

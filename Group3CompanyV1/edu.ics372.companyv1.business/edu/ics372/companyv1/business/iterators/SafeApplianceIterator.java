@@ -13,7 +13,6 @@ public class SafeApplianceIterator implements Iterator<Result>{
 	}
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
 		return iterator.hasNext();
 	}
 
